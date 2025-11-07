@@ -65,6 +65,9 @@ TEMPLATES = [
         },
     },
 ]
+# Stripe API Keys
+STRIPE_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXX"
+STRIPE_SECRET_KEY = "sk_test_XXXXXXXXXXXXXXXXXXXXXXXX"
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
