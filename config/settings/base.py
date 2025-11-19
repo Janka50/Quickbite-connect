@@ -22,7 +22,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'drf_spectacular',
 ]
 
 LOCAL_APPS = [
@@ -65,9 +66,25 @@ TEMPLATES = [
         },
     },
 ]
+# API Documentation
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'QuickBite Connect API',
+    'DESCRIPTION': 'Complete API documentation for QuickBite Connect - Food & Grocery Delivery Platform',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+}
+
+
 # Stripe API Keys
-STRIPE_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXX"
-STRIPE_SECRET_KEY = "sk_test_XXXXXXXXXXXXXXXXXXXXXXXX"
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -107,6 +124,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
 }
 
 CORS_ALLOW_ALL_ORIGINS = True

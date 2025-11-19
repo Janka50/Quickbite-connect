@@ -21,6 +21,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from .views import health_check, api_info
+from django.views.generic import TemplateView
+
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +36,14 @@ urlpatterns = [
     path('api/products/', include('products.urls')),
     path('api/orders/', include ('orders.urls')),
     path('api/payments/', include('payments.urls')),
+    path('api/reviews/', include('reviews.urls')),
+    path('api/notifications/', include('notifications.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/health/', health_check, name='health-check'),
+    path('api/', api_info, name='api-info'),
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
 ]
 
 
@@ -41,3 +56,6 @@ if settings.DEBUG:
 admin.site.site_header = "QuickBite Connect Admin"
 admin.site.site_title = "QuickBite Admin Portal"
 admin.site.index_title = "Welcome to QuickBite Connect"
+
+
+# Add this to urlpatterns at the beginning:

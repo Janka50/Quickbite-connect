@@ -5,6 +5,7 @@ import uuid
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from users.models import User
+from stores.utils import update_store_rating
 
 
 class Store(models.Model):
@@ -109,7 +110,13 @@ class Store(models.Model):
             parts.append(self.address_line2)
         parts.extend([self.city, self.state, self.postal_code])
         return ', '.join(parts)
-
+    def update_rating(self):
+      update_store_rating(self)
+      
+    def update_rating(self):
+        """Update store's average rating"""
+        from stores.utils import update_store_rating
+        update_store_rating(self)
 
 class StoreStaff(models.Model):
     """Store staff management"""

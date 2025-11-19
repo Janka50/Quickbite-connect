@@ -6,6 +6,8 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from stores.models import Store
 
+from stores.utils import update_product_rating
+
 
 class ProductCategory(models.Model):
     """Categories for products"""
@@ -125,7 +127,14 @@ class Product(models.Model):
     def is_in_stock(self):
         """Check if product is in stock"""
         return self.stock_quantity > 0
-
+    def update_rating(self):
+       update_product_rating(self)
+     
+     
+    def update_rating(self):
+        """Update store's average rating"""
+        from stores.utils import update_product_rating
+        update_product_rating(self)
 
 class ProductImage(models.Model):
     """Additional images for products"""
